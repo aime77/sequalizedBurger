@@ -1,0 +1,43 @@
+<div class='py-9'>
+    <h1 class="text-center my-5">Yum-Yum-Burgers!!!</h1>
+</div>
+
+<div id='picture' class="row align-items-center justify-content-center rounded">
+    <img src='assets/img/Burger_Girl3.jpg' height=200 width=352>
+</div>
+
+<div class='row align-items-center justify-content-center'>
+    <form class="create-form" width=352>
+        <div class="form-group" style="width: 352px;">
+            <label for="bNew"></label>
+            <input type="text" id="bNew" name="burger_name" placeholder='Enter a Yum-Yum-Burger name!' class='rounded'>
+        </div>
+
+        <button type="submit" class="btn btn-success submitButton" href="#modalPopUp" rel="modal:open">Get Burger</button>
+    </form>
+</div>
+
+<div class='row justify-content-center '>
+    <div id='uneaten' class='container col-lg-2 col-md-5 col-sm-6 col-xs-6 py-3 mr-0'>
+                <h2 >Eat Me!</h2>
+                <ul class="list-group">
+                    {{#each burgers}} {{#unless devoured}} {{> burgers/burger-devour devoured=true}} {{/unless}} {{/each}}
+                </ul>
+    </div>
+
+    <div id='eaten' class='container col-lg-2 col-md-5 col-sm-6 col-xs-6 py-3 ml-0'>
+                <h2>Yum Yum!</h2>
+                <ul class="list-group">
+                    {{#each burgers}} {{#if devoured}} {{> burgers/burger-devoured devoured=false}} {{/if}} {{/each}}
+                </ul>
+            </div>
+    </div>
+
+
+
+<!-- Modal HTML embedded directly into document -->
+<div id="modalPopUp" class="modal">
+  <p>Please try a different burger name.</p>
+  <a href="#" rel="modal:close">Close</a>
+</div>
+
