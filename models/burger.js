@@ -1,21 +1,24 @@
-const orm = require('../config/orm.js');
-
-let burgers = {
-    selectAll: (cb) => {
-        orm.selectAll('burgers', (res) => {
-            cb(res);
-        });
-    },
-    insertOne: (fields, vals, cb) => {
-        orm.insertOne('burgers', fields, vals, (res) => {
-            cb(res);
-        });
-    },
-    updateOne: (objFieldVals, condition, cb) => {
-        orm.updateOne('burgers', objFieldVals, condition, (res) => {
-            cb(res);
-        })
-    },
-};
-
-module.exports = burgers;
+module.exports = function (sequelize) {
+    let Burgers = sequelize.define('burgers', {
+        burger_name: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            validate: {
+                is: ["^[a-z]+$", 'i'],
+            }
+        },
+        devoured: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        },
+        customerName: {
+            type: Sequalize.STRING,
+            allowNull: false,
+            validate: {
+                is: ["^[a-z]+$", 'i'],
+            }
+        }
+    });
+    return Burgers;
+}
