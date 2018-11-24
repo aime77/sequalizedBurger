@@ -21,7 +21,8 @@
     <div id='uneaten' class='container col-lg-2 col-md-5 col-sm-6 col-xs-6 py-3 mr-0'>
                 <h2 >Eat Me!</h2>
                 <ul class="list-group">
-                    {{#each burgers}} {{#unless devoured}} {{> burgers/burger-devour devoured=true}} {{/unless}} {{/each}}
+                    
+                    {{#each burgers }} {{#unless devoured}} {{> burgers/burger-devour devoured=true}} {{/unless}} {{/each}}
                 </ul>
     </div>
 

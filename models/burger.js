@@ -1,24 +1,24 @@
-module.exports = function (sequelize) {
-    let Burgers = sequelize.define('burgers', {
+module.exports = function (sequelize, DataTypes) {
+    var Hamburgers = sequelize.define('Hamburgers', {
         burger_name: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 is: ["^[a-z]+$", 'i'],
             }
         },
         devoured: {
-            type: Sequelize.BOOLEAN,
+            type: DataTypes.BOOLEAN,
             defaultValue: false,
             allowNull: false
         },
-        customerName: {
-            type: Sequalize.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i'],
-            }
-        }
+        // customerName: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        //     validate: {
+        //         is: ["^[a-z]+$", 'i'],
+        //     }
+        // }
     });
-    return Burgers;
+    return Hamburgers;
 }

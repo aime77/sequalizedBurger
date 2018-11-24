@@ -1,34 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../models/burgers.js')
+const db = require('../models');
 
-
-
-//route to get all info for the client and render it 
 router.get("/", (req, res) => {
-    db.Burgers.findAll({}).then((results) => {
-        res.render('index', results);
+    db.Hamburgers.findAll({}).then(function (results){
+        
+        res.render('index', {burgers:results});
+       
     });
 });
 
-//route to insert data to table from user input
 router.post('/api/burgers', (req, res) => {
-    db.Burgers.create({
+    db.Hamburgers.create({
         burger_name: req.body.burger_name,
     }).then((results) => {
-        res.render('index', results);
+        res.json(results);
     })
 });
 
 router.put("/api/burgers/:id", function (req, res) {
-    db.Burgers.update({
+    db.Hamburgers.update({
         devoured: req.body.devoured,
     },
         {
             where: {
                 id: req.params.id
             }
-        }).then((results) => {
+        }).then(() => {
             res.end();
         })
 });
