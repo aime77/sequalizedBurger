@@ -3,10 +3,8 @@ const router = express.Router();
 const db = require('../models');
 
 router.get("/", (req, res) => {
-    db.Hamburgers.findAll({}).then(function (results){
-        
-        res.render('index', {burgers:results});
-       
+    db.Hamburgers.findAll({}).then((results)=> {
+        res.render('index', { burgers: results });
     });
 });
 
@@ -26,7 +24,7 @@ router.put("/api/burgers/:id", function (req, res) {
             where: {
                 id: req.params.id
             }
-        }).then(() => {
+        }).then(function(){
             res.end();
         })
 });
