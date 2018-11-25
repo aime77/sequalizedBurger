@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var Hamburgers = sequelize.define('Hamburgers', {
+    const Hamburgers = sequelize.define('Hamburgers', {
         burger_name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -12,13 +12,8 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: false,
             allowNull: false
         },
-        // customerName: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false,
-        //     validate: {
-        //         is: ["^[a-z]+$", 'i'],
-        //     }
-        // }
-    });
+    }
+    );
     return Hamburgers;
 }
+
