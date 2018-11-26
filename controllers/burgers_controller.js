@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../models');
 
 router.get("/", (req, res) => {
-    db.Hamburgers.findAll({}).then((results)=> {
+    db.Hamburgers.findAll({}).then((results) => {
         res.render('index', { burgers: results });
     });
 });
@@ -11,9 +11,17 @@ router.get("/", (req, res) => {
 router.post('/api/burgers', (req, res) => {
     db.Hamburgers.create({
         burger_name: req.body.burger_name,
-    }).then((results) => {
-        res.json(results);
-    })
+        customer_name:req.body.customer_name,
+    },
+        {
+            include:
+                [{
+                    association: Bill.Customer,
+                    include: Customer.Hamburgers
+                }]
+        }).then((results) => {
+            res.json(results);
+        })
 });
 
 router.put("/api/burgers/:id", function (req, res) {
@@ -24,7 +32,7 @@ router.put("/api/burgers/:id", function (req, res) {
             where: {
                 id: req.params.id
             }
-        }).then(function(){
+        }).then(function () {
             res.end();
         })
 });

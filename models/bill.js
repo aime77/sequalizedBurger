@@ -1,14 +1,23 @@
+
+
 module.exports = function (sequelize, DataTypes) {
-    const Customer = sequelize.define('Customer', {
-        customerName: {
-            type: DataTypes.STRING,
+    const Bills = sequelize.define('Bills', {
+        billTotal: {
+            type: DataTypes.INTEGER(11).UNSIGNED.ZEROFILL,
             allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i'],
-            }
-        }
+            validate: { min: 2, max: 200 }
+        },
+        cashed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        },
     });
-    Customer.Bill=Customer.belongsTo(Bill);
-    Customer.Hamburger=Customer.hasMany(Hamburger);
-    return Customer;
+
+    Bills.associate = function (models) {
+        Bills.belongsToMany(models.Hamburgers, {as:'Hamburgers', through: 'Statements' })
+        Bills.belongsToMany(models.Customer, { as:'Customer', through: 'Clients' });
+    }
+
+    return Bills;
 }

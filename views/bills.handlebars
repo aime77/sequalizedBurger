@@ -1,0 +1,21 @@
+<div class='row justify-content-center '>
+    <div id='uneaten' class='container col-lg-2 col-md-5 col-sm-6 col-xs-6 py-3 mr-0'>
+                <h2 >Eat Me!</h2>
+                <ul class="list-group">
+                    {{#each burgers }} {{#unless devoured}} {{> burgers/burger-devour this devoured=true burger_name=burger_name id=id}} {{/unless}} {{/each}}
+                </ul>
+    </div>
+
+    <div id='eaten' class='container col-lg-2 col-md-5 col-sm-6 col-xs-6 py-3 ml-0'>
+                <h2>Yum Yum!</h2>
+                <ul class="list-group">
+                    {{#each burgers}} {{#if devoured}} {{> burgers/burger-devoured this devoured=false burger_name=burger_name}} {{/if}} {{/each}}
+                </ul>
+            </div>
+    </div>
+
+<!-- Modal HTML embedded directly into document -->
+<div id="modalPopUp" class="modal">
+  <p>Please try a different burger name.</p>
+  <a href="#" rel="modal:close">Close</a>
+</div>
