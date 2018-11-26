@@ -15,6 +15,7 @@
     "gitignore": "^0.6.0",
     "mysql": "^2.16.0",
     "mysql2": "^1.6.4",
-    "sequelize": "^4.41.2"
+    "sequelize": "^4.41.2",
+    "sequelize-auto-migrations": "^1.0.2"
   }
 }

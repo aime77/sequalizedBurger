@@ -15,8 +15,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Bills.associate = function (models) {
-        Bills.belongsToMany(models.Hamburgers, {as:'Hamburgers', through: 'Statements' })
-        Bills.belongsToMany(models.Customer, { as:'Customer', through: 'Clients' });
+        Bills.hasMany(models.Hamburgers, { as: 'Hamburgers'});
     }
 
     return Bills;

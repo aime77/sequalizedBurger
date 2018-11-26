@@ -12,11 +12,14 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: { min: 1, max: 20 }
         },
+        quantity: {
+            type: DataTypes.INTEGER(11).UNSIGNED.ZEROFILL,
+            allowNull: false,
+            validate: { min: 1, max: 20 }
+        },
     }
     );
-    Hamburgers.associate = function (models) {
-    Hamburgers.belongsToMany(models.Bills, { as: 'Bills', through: 'Statements' });
-    }
+    
     return Hamburgers;
 
 }
