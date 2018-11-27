@@ -1,12 +1,18 @@
 body{
     margin-top: 12rem;
     font-size:1rem;
-    background-image: url('/assets/img/bg3.jpg');
-    background-color:orange;
+    background-image: url('/assets/img/bg3.jpeg');
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+    -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+ 
     color: black;
     width:100%;
-    opacity: 0.33;
-    background-repeat: no-repeat;
     /*background: rgba(0, 0, 0, 0.4);*/
 }
 
@@ -17,7 +23,7 @@ h2{
     font-family: 'Courgette', cursive;
     font-size: 2rem;
 }
-#bNew{
+#bNew, #eNew, #qNew{
 width:22rem;
 height:3rem;
 text-align: initial;
