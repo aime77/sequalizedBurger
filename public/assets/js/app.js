@@ -21,22 +21,21 @@ $(".change-devoured").on("click", function (event){
 
   $(".create-form").on("submit", function (event) {
     event.preventDefault();
-    var test=$("#bNew").val().trim();
+    var test=$("#eNew").val().trim();
     console.log(test);
-    let regex = /^[a-zA-Z\s]+$/;
-    if ($(`#bNew`).val().trim() === ""|| !regex.test($("#bNew").val())) {
-      $("#modalPopUp").text("You have to enter a valid name before submitting!");
-      return true;
-    }
+    // let regex = /^[a-zA-Z\s]+$/;
+    // if ($(`#eNew`).val().trim() === ""|| !regex.test($("#eNew").val())) {
+    //   $("#modalPopUp").text("You have to enter a valid name before submitting!");
+    //   return true;
+    // }
   
-    let newBurger = {
-      burger_name: $("#bNew").val().trim(),
-
+    let newEmail = {
+      email: $("#eNew").val().trim(),
     };
-
-    $.ajax("/api/burgers", {
+    console.log('test');
+    $.ajax("/api/customer", {
       type: "POST",
-      data: newBurger
+      data: newEmail
     }).then(()=> {
       console.log("created new burger");
       location.reload();

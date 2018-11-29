@@ -5,6 +5,7 @@ module.exports = function (sequelize, DataTypes) {
         billTotal: {
             type: DataTypes.INTEGER(11).UNSIGNED.ZEROFILL,
             allowNull: false,
+            defaultValue: 0,
             validate: { min: 2, max: 200 }
         },
         cashed: {
@@ -12,11 +13,23 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: false,
             allowNull: false
         },
+        customer_id: {
+            type: DataTypes.INTEGER,
+            foreignKey:true,
+            references: {
+                model: "Customers",
+                key: "primaryCust_id"
+            }
+        },
+        burger_id: {
+            type: DataTypes.INTEGER,
+            foreignKey:true,
+            references: {
+              model: "Hamburgers",
+              key: "primaryBurger_Id"
+            }
+        },
     });
-
-    Bills.associate = function (models) {
-        Bills.hasMany(models.Hamburgers, { as: 'Hamburgers'});
-    }
 
     return Bills;
 }
