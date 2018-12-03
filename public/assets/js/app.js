@@ -29,13 +29,15 @@ $(".change-devoured").on("click", function (event){
     //   return true;
     // }
   
-    let newEmail = {
+    let objInfo = {
       email: $("#eNew").val().trim(),
+      quantity:$('#qNew').val().trim(),
+      burger_name:$('#bNew').val().trim()
     };
     console.log('test');
     $.ajax("/api/customer", {
       type: "POST",
-      data: newEmail
+      data: objInfo
     }).then(()=> {
       console.log("created new burger");
       location.reload();

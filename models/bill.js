@@ -3,7 +3,7 @@
 module.exports = function (sequelize, DataTypes) {
     const Bills = sequelize.define('Bills', {
         billTotal: {
-            type: DataTypes.INTEGER(11).UNSIGNED.ZEROFILL,
+            type: DataTypes.INTEGER(2).UNSIGNED.ZEROFILL,
             allowNull: false,
             defaultValue: 0,
             validate: { min: 2, max: 200 }
@@ -13,23 +13,13 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: false,
             allowNull: false
         },
-        customer_id: {
-            type: DataTypes.INTEGER,
-            foreignKey:true,
-            references: {
-                model: "Customers",
-                key: "primaryCust_id"
-            }
-        },
-        burger_id: {
-            type: DataTypes.INTEGER,
-            foreignKey:true,
-            references: {
-              model: "Hamburgers",
-              key: "primaryBurger_Id"
-            }
-        },
+
     });
+
+    Bills.associate = function (models) {
+        Bills.belongsTo(models.Customers, { as: 'customers' }, { foreignKey: { name: 'customersId', allowNull: false } })
+        Bills.hasMany(models.Orders, { as: 'bills' }, { foreignKey: { name: 'billsId' } })
+    }
 
     return Bills;
 }

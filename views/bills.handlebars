@@ -1,0 +1,19 @@
+<div class='container jumbotron '>
+  
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Customer</th>
+      <th scope="col">Total Bill</th>
+      <th scope="col">Cashed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+       {{#each orders}} {{> orders/orders-list this email=email id=id billTotal=billTotal cashed=cashed}}{{/each}}
+     
+    </tr>
+  </tbody>
+</table>
+  </div>

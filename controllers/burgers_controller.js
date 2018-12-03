@@ -6,85 +6,61 @@ const db = require('../models');
 //get burgers' names to provide a drop down list of all burgers 
 router.get("/", (req, res) => {
     db.Hamburgers.findAll({
-       }).then((results) => {
+    }).then((results) => {
         res.render('index', { burgers: results });
     });
 });
 
-//ADD CUSTOMER IF IT'S NOT ALREADY ON THE LIST
+
 router.post('/api/customer', (req, res) => {
-    console.log('test')
-    db.Customers.findOrCreate({ where: { email: req.body.email }, defaults:{id:id} })
-        .spread((customers, created) => {
-            console.log(customers.get({
+    //ADD CUSTOMER IF IT'S NOT ALREADY ON THE LIST
+    db.Customers.findOrCreate({ where: { email: req.body.email } })
+        .spread(async function (customers, created) {
+
+            const objEmail = await customers.get({
                 plain: true
-            }))
-            console.log(created)
+            });
 
-        }).then(function(){
-            console.log(created);
-        // db.Bill.create({
-        //     billTotal: req.body.billTotal,
-        //     Hamburgers: [
-        //         {price: price},
-        //     ]
-        // },
-        //     {
-        //         include: [Hamburgers]
-        //     },
-        //     {
-        //         where: {
-        //             email: created,
-        //             price:price
-        //         }
-        //     }).then((results) => {
-        //         res.json(results);
-        //         //res.redirect('/');
-        //     })
+            return objEmail;
+
+        }).then(function () { });
+    //INSERT TO BILLS TABLE ACCORDING TO SELCTED CUSTOMER 
+
+    console.log('buger' + req.body.burger_name);
+    db.Hamburgers.findAll({}, { where: { id: req.body.burger_name } })
+        .then(async (hamburgers) => {
+            let objPrice;
+            objPrice = await hamburgers[0].dataValues.price;
+            db.Bills.create({
+
+                billTotal: req.body.quantity * objPrice,
+                customers: [{ email: req.body.email }]
+            }, {
+                    include: [{
+                        model: db.Customers,
+                        as: 'customers'
+                    }]
+                }).then(function () { console.log('created!!') });;
+
         })
-})
-
-// finding if email exists
-//     db.Customer.findOne({ where: {attr1: req.body.email} }).then(function(resultsEmail){
-//     //if it exists redirect 
-//         if (results) {
-//         res.redirect('/api/customer/bill');
-//     //if it doesn't create a new customer 
-//         }else {
-//             db.Customer.create({
-//                 email: req.body.email,
-//             }).then((customerEmail) => {
-//                 res.redirect('/api/customer/bill');
-//                // res.json(results);
-//             })
-//         }
-//     })
-// })
 
 
-//enter a bill per hamburgers and customers
-router.post('/api/customer/bill', (req, res) => {
-    db.Bill.create({
-        billTotal: req.body.billTotal,
-        Hamburgers: [
-            {price: price},
-        ]
-    },
-        {
-            include: [Hamburgers]
-        },
-        {
-            where: {
-                email: created,
-                price:price
-            }
-        }).then((results) => {
+        //INSERT TO ORDERS TABLE ACCORDING TO HAMBURGER 
+        .then(function () {
+
+            db.Orders.create({
+                quantity: req.body.quantity,
+                burgers: [{ burger_name: req.body.burger_name }]
+            }, {
+                    include: [{ model: db.Hamburgers, as: 'burgers' }]
+                })
+
+        })
+        .then((results) => {
             res.json(results);
             //res.redirect('/');
         })
-
-});
-
+})
 
 //UPDATE BILLS IF CASHED
 router.put("/api/customer/bill/:id", function (req, res) {
@@ -99,5 +75,24 @@ router.put("/api/customer/bill/:id", function (req, res) {
             res.end();
         })
 });
+
+//CREATE A TABLE WITH ALL ORDERS
+router.get('/api/orders', function (req, res) {
+    db.Orders.findAll({ where: { ordersId: true } },
+        { include: [{ model: db.Hamburgers }] }
+    ).then((results) => {
+        res.render('orders', { oders: results });
+    });
+})
+
+//CREATE A TABLE TO CASH ORDERS
+router.get('/api/customersTotal', function (req, res) {
+    db.Bills.findAll({ where: { customersId: true } },
+        { include: [{ model: db.Customers }] }
+    ).then((results) => {
+        res.render('bills', { bills: results });
+    });
+})
+
 
 module.exports = router;
