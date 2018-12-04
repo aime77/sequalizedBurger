@@ -2,13 +2,14 @@ $(function(){
 
 $(".change-devoured").on("click", function (event){
   let id = $(this).data("id");
-  let newStatus = $(this).data("devour");
+  let newStatus = $(this).data("cashed");
+  console.log(newStatus);
 
   let newDev = {
-    devoured: newStatus
+   cashed: newStatus
   };
 
-  $.ajax("/api/burgers/" + id, {
+  $.ajax("/api/customer/bills/" + id, {
     type: "PUT",
     data: newDev
   }).then(
@@ -22,7 +23,7 @@ $(".change-devoured").on("click", function (event){
   $(".create-form").on("submit", function (event) {
     event.preventDefault();
     var test=$("#eNew").val().trim();
-    console.log(test);
+  
     // let regex = /^[a-zA-Z\s]+$/;
     // if ($(`#eNew`).val().trim() === ""|| !regex.test($("#eNew").val())) {
     //   $("#modalPopUp").text("You have to enter a valid name before submitting!");
@@ -43,5 +44,9 @@ $(".change-devoured").on("click", function (event){
       location.reload();
     }
     );
-  });
+
+    $("#eNew").val("");
+     $('#qNew').val("");
+      $('#bNew').val("");
 });
+})

@@ -1,7 +1,7 @@
 <div class='container jumbotron '>
   
-<table class="table">
-  <thead>
+<table class="table" id='cashed'>
+  <thead>INACTIVE BILLS
     <tr>
       <th scope="col">#</th>
       <th scope="col">Customer</th>
@@ -10,10 +10,34 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-       {{#each orders}} {{> orders/orders-list this email=email id=id billTotal=billTotal cashed=cashed}}{{/each}}
+    
+       {{#each bills}} {{#if cashed}} {{> bills/bills-list-cashed this customersId=customersId id=id billTotal=billTotal cashed=false}}{{/if}}{{/each}}
      
-    </tr>
+   
   </tbody>
 </table>
   </div>
+
+
+
+  <div class='container jumbotron '>
+  
+<table class="table" id='notCashed'>
+  <thead>ACTIVE BILLS
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Customer ID</th>
+      <th scope="col">Total Bill</th>
+      <th scope="col">Cashed</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+       {{#each bills}} {{#unless cashed}} {{> bills/bills-list this customersId=customersId  id=id billTotal=billTotal cashed=true}}{{/unless}}{{/each}}
+     
+   
+  </tbody>
+</table>
+  </div>
+
+

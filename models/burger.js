@@ -18,8 +18,8 @@ module.exports = function (sequelize, DataTypes) {
 
     });
     Hamburgers.associate = function (models) {
-        Hamburgers.hasMany(models.Orders, { as: 'burgers' },
-            { foreignKey: { name: 'burgersId' } },);
+        Hamburgers.hasMany(models.Orders, { as: 'hamburgers' },
+            { foreignKey: { name: 'hamburgersId' } },);
     }
     return Hamburgers;
 }

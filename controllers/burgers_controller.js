@@ -20,7 +20,7 @@ router.post('/api/customer', (req, res) => {
             const objEmail = await customers.get({
                 plain: true
             });
-
+            console.log(created);
             return objEmail;
 
         }).then(function () { });
@@ -40,22 +40,10 @@ router.post('/api/customer', (req, res) => {
                         model: db.Customers,
                         as: 'customers'
                     }]
-                }).then(function () { console.log('created!!') });;
+                }).then(function () { console.log('bill created!!') });;
 
         })
 
-
-        //INSERT TO ORDERS TABLE ACCORDING TO HAMBURGER 
-        .then(function () {
-
-            db.Orders.create({
-                quantity: req.body.quantity,
-                burgers: [{ burger_name: req.body.burger_name }]
-            }, {
-                    include: [{ model: db.Hamburgers, as: 'burgers' }]
-                })
-
-        })
         .then((results) => {
             res.json(results);
             //res.redirect('/');
@@ -63,8 +51,9 @@ router.post('/api/customer', (req, res) => {
 })
 
 //UPDATE BILLS IF CASHED
-router.put("/api/customer/bill/:id", function (req, res) {
-    db.Bill.update({
+router.put("/api/customer/bills/:id", function (req, res) {
+    console.log('this is it'+req.body);
+    db.Bills.update({
         cashed: req.body.cashed,
     },
         {
@@ -76,21 +65,24 @@ router.put("/api/customer/bill/:id", function (req, res) {
         })
 });
 
-//CREATE A TABLE WITH ALL ORDERS
-router.get('/api/orders', function (req, res) {
-    db.Orders.findAll({ where: { ordersId: true } },
-        { include: [{ model: db.Hamburgers }] }
+//CREATE A TABLE WITH ALL BILLS
+router.get('/api/customer/bills', function (req, res) {
+    db.Bills.findAll({ },
+        { include: [{ model: db.Customers, as:'customers'}] }
     ).then((results) => {
-        res.render('orders', { oders: results });
+     
+        res.render('bills', { bills: results });
     });
 })
 
-//CREATE A TABLE TO CASH ORDERS
-router.get('/api/customersTotal', function (req, res) {
-    db.Bills.findAll({ where: { customersId: true } },
+//CREATE A TABLE WITH ALL CUSTOMERS
+router.get('/api/customers/info', function (req, res) {
+    db.Customers.findAll({group: 'email'},
         { include: [{ model: db.Customers }] }
     ).then((results) => {
-        res.render('bills', { bills: results });
+      
+        res.render('customers', { customers: results });
+
     });
 })
 

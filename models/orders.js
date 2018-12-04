@@ -5,10 +5,10 @@ module.exports = function (sequelize, DataTypes) {
 
     });
     Orders.association = function (models) {
-        Orders.belongsTo(models.Hamburgers, { as: 'burgers' },
+        Orders.belongsTo(models.Hamburgers, { as: 'hamburgers' },
             {
                 foreignKey: {
-                    name: 'burgersId',
+                    name: 'hamburgersId',
                     allowNull: false
                 }
             }),
