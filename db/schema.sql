@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS burgerSeq_db;
-CREATE DATABASE burgerSeq_db;
+
+CREATE DATABASE uvpqbihjjxcx9rt7;

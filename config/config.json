@@ -15,7 +15,11 @@
     "dialect": "mysql"
   },
   "production": {
-    "use_env_variable": "JAWSDB_URL",
-    "dialect": "mysql"
+    "username": "qbivc1kxbaxhm54s",
+    "password": "dnb6m7bcs7jm4lcd",
+    "database": "uvpqbihjjxcx9rt7",
+    "host": "otwsl2e23jrxcqvx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "dialect": "mysql",
+    "seederStorage": "sequelize"
   }
 }
